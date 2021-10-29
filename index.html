@@ -13,19 +13,24 @@
     <script>
         const canvas = document.querySelector('canvas');
         const ctx = canvas.getContext('2d');
-        let x = 200;
-        
+        let x = 100, y = 100, ultimoFrame, deltaFrames, deltaSegundos, framesPorSegundo;
         canvas.width = 480;
         canvas.height = 320;
-        desenha();
+        requestAnimationFrame(desenha)
         
-        function desenha() {
+        function desenha(tempoAtual) {
+            ultimoFrame = ultimoFrame ?? tempoAtual;
+            deltaFrames = tempoAtual - ultimoFrame;
+            deltaSegundos = deltaFrames / 1000;
+            framesPorSegundo = 1 / deltaSegundos;
             // Preenche fundo
             ctx.fillStyle = 'black';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             // Preenche elementos
             ctx.fillStyle = 'white';
-            ctx.fillRect(x, 150, 25, 25);
+            ctx.fillRect(x, y, 25, 25);
+            requestAnimationFrame(desenha);
+            ultimoFrame = tempoAtual;
         }
     </script>
 </body>
