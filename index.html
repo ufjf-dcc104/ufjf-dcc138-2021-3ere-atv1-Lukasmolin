@@ -13,10 +13,20 @@
     <script>
         const canvas = document.querySelector('canvas');
         const ctx = canvas.getContext('2d');
+        let x = 200;
+        
         canvas.width = 480;
         canvas.height = 320;
-        ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        desenha();
+        
+        function desenha() {
+            // Preenche fundo
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // Preenche elementos
+            ctx.fillStyle = 'white';
+            ctx.fillRect(x, 150, 25, 25);
+        }
     </script>
 </body>
 </html>
