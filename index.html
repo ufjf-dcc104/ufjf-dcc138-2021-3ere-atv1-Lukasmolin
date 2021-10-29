@@ -32,6 +32,7 @@
             // Atualiza Estado
             const deltaEspaco = 25;
             x += deltaEspaco * deltaSegundos;
+            y = 150 + 500 * Math.cos(tempoAtual/200) * deltaSegundos;
 
             // Preenche elementos
             ctx.fillStyle = 'white';
