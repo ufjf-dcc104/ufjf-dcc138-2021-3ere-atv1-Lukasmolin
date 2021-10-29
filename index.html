@@ -12,9 +12,11 @@
     <p>Por Lucas Molin Chacon dos Anjos (2021/3)</p>
     <script>
         const canvas = document.querySelector('canvas');
+        const ctx = canvas.getContext('2d');
         canvas.width = 480;
         canvas.height = 320;
-        
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
     </script>
 </body>
 </html>
