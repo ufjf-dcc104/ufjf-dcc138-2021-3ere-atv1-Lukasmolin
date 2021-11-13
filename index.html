@@ -15,11 +15,13 @@
     <script>
         const canvas = document.querySelector('canvas');
         const ctx = canvas.getContext('2d');
-        let x = 100, y = 100, ultimoFrame, deltaFrames, deltaSegundos, framesPorSegundo;
         canvas.width = 480;
         canvas.height = 320;
-        requestAnimationFrame(desenha)
+        let x = 100, vx = 0, y = 100, vy = 0,
+            ultimoFrame, deltaFrames, deltaSegundos, framesPorSegundo;
+        
 
+        requestAnimationFrame(desenha);
         function desenha(tempoAtual) {
             ultimoFrame = ultimoFrame ?? tempoAtual;
             deltaFrames = tempoAtual - ultimoFrame;
@@ -29,16 +31,35 @@
             ctx.fillStyle = 'black';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Atualiza Estado
+            // Atualiza dinâmica dos estados
             const deltaEspaco = 25;
-            x += deltaEspaco * deltaSegundos;
-            y = 150 + 500 * Math.cos(tempoAtual/200) * deltaSegundos;
+            x += vx * deltaSegundos;
+            y += vy * deltaSegundos;
 
             // Preenche elementos
             ctx.fillStyle = 'white';
             ctx.fillRect(x, y, 25, 25);
             requestAnimationFrame(desenha);
             ultimoFrame = tempoAtual;
+        }
+        
+        addEventListener('keydown', teclaPressionada);
+        function teclaPressionada(ev) {
+            // Controle de velocidades
+            switch(ev.key) {
+                case 'ArrowUp':
+                    vy = - 25;
+                    break;
+                case 'ArrowDown':
+                    vy = + 25;
+                    break;
+                case 'ArrowLeft':
+                    vx = - 25;
+                    break;
+                case 'ArrowRight':
+                    vx = + 25;
+                    break;
+            }
         }
     </script>
 </body>
