@@ -61,6 +61,21 @@
                     break;
             }
         }
+
+        addEventListener('keyup', teclaSolta);
+        function teclaSolta(ev) {
+            // Controle de velocidades
+            switch(ev.key) {
+                case 'ArrowUp':
+                case 'ArrowDown':
+                    vy = 0;
+                    break;
+                case 'ArrowLeft':
+                case 'ArrowRight':
+                    vx = 0;
+                    break;
+            }
+        }
     </script>
 </body>
 
