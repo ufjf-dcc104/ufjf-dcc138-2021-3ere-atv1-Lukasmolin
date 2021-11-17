@@ -18,10 +18,16 @@
         canvas.width = 480;
         canvas.height = 320;
         const K = 1000;
-        let x = 100, vx = 0, ax = 0, y = 100, vy = 0, ay = 0,
-            e_x = 300, e_vx = 0, e_ax = 0, e_y = 250, e_vy = 0, e_ay = 0,
+        const p = {
+            x: 100,
+            vx: 0,
+            ax: 0,
+            y: 100,
+            vy: 0,
+            ay: 0
+        }
+        let e_x = 300, e_vx = 0, e_ax = 0, e_y = 250, e_vy = 0, e_ay = 0,
             ultimoFrame, deltaFrames, deltaSegundos, framesPorSegundo;
-
 
         requestAnimationFrame(desenha);
         function desenha(tempoAtual) {
@@ -34,14 +40,14 @@
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             // Controladores
-            e_ay = 0.5 * (y - e_y) - 0.2 * e_vy;
-            e_ax = 0.5 * (x - e_x) - 0.2 * e_vx;
+            e_ay = 0.5 * (p.y - e_y) - 0.2 * e_vy;
+            e_ax = 0.5 * (p.x - e_x) - 0.2 * e_vx;
 
             // Atualiza dinâmica dos estados
-            vx += ax * deltaSegundos;
-            vy += ay * deltaSegundos;
-            x += vx * deltaSegundos;
-            y += vy * deltaSegundos;
+            p.vx += p.ax * deltaSegundos;
+            p.vy += p.ay * deltaSegundos;
+            p.x += p.vx * deltaSegundos;
+            p.y += p.vy * deltaSegundos;
 
             e_vx += e_ax * deltaSegundos;
             e_vy += e_ay * deltaSegundos;
@@ -50,7 +56,7 @@
 
             // Preenche elementos
             ctx.fillStyle = 'white';
-            ctx.fillRect(x, y, 25, 25);
+            ctx.fillRect(p.x, p.y, 25, 25);
             ctx.fillStyle = 'red';
             ctx.fillRect(e_x, e_y, 25, 25);
 
@@ -63,16 +69,16 @@
             // Controle de velocidades
             switch (ev.key) {
                 case 'ArrowUp':
-                    ay = - K;
+                    p.ay = - K;
                     break;
                 case 'ArrowDown':
-                    ay = + K;
+                    p.ay = + K;
                     break;
                 case 'ArrowLeft':
-                    ax = - K;
+                    p.ax = - K;
                     break;
                 case 'ArrowRight':
-                    ax = + K;
+                    p.ax = + K;
                     break;
             }
         }
@@ -83,13 +89,13 @@
             switch (ev.key) {
                 case 'ArrowUp':
                 case 'ArrowDown':
-                    vy = 0;
-                    ay = 0;
+                    p.vy = 0;
+                    p.ay = 0;
                     break;
                 case 'ArrowLeft':
                 case 'ArrowRight':
-                    vx = 0;
-                    ax = 0;
+                    p.vx = 0;
+                    p.ax = 0;
                     break;
             }
         }
