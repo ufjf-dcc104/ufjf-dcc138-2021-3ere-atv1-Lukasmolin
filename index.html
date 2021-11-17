@@ -17,9 +17,10 @@
         const ctx = canvas.getContext('2d');
         canvas.width = 480;
         canvas.height = 320;
+        const V = 180;
         let x = 100, vx = 0, y = 100, vy = 0,
             ultimoFrame, deltaFrames, deltaSegundos, framesPorSegundo;
-        
+
 
         requestAnimationFrame(desenha);
         function desenha(tempoAtual) {
@@ -42,22 +43,22 @@
             requestAnimationFrame(desenha);
             ultimoFrame = tempoAtual;
         }
-        
+
         addEventListener('keydown', teclaPressionada);
         function teclaPressionada(ev) {
             // Controle de velocidades
-            switch(ev.key) {
+            switch (ev.key) {
                 case 'ArrowUp':
-                    vy = - 25;
+                    vy = - V;
                     break;
                 case 'ArrowDown':
-                    vy = + 25;
+                    vy = + V;
                     break;
                 case 'ArrowLeft':
-                    vx = - 25;
+                    vx = - V;
                     break;
                 case 'ArrowRight':
-                    vx = + 25;
+                    vx = + V;
                     break;
             }
         }
@@ -65,7 +66,7 @@
         addEventListener('keyup', teclaSolta);
         function teclaSolta(ev) {
             // Controle de velocidades
-            switch(ev.key) {
+            switch (ev.key) {
                 case 'ArrowUp':
                 case 'ArrowDown':
                     vy = 0;
