@@ -19,6 +19,7 @@
         canvas.height = 320;
         const K = 1000;
         let x = 100, vx = 0, ax = 0, y = 100, vy = 0, ay = 0,
+            e_x = 300, e_vx = 0, e_ax = 0, e_y = 250, e_vy = 0, e_ay = 0,
             ultimoFrame, deltaFrames, deltaSegundos, framesPorSegundo;
 
 
@@ -32,15 +33,27 @@
             ctx.fillStyle = 'black';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+            // Controladores
+            e_ay = 0.5 * (y - e_y) - 0.2 * e_vy;
+            e_ax = 0.5 * (x - e_x) - 0.2 * e_vx;
+
             // Atualiza dinâmica dos estados
             vx += ax * deltaSegundos;
             vy += ay * deltaSegundos;
             x += vx * deltaSegundos;
             y += vy * deltaSegundos;
 
+            e_vx += e_ax * deltaSegundos;
+            e_vy += e_ay * deltaSegundos;
+            e_x += e_vx * deltaSegundos;
+            e_y += e_vy * deltaSegundos;
+
             // Preenche elementos
             ctx.fillStyle = 'white';
             ctx.fillRect(x, y, 25, 25);
+            ctx.fillStyle = 'red';
+            ctx.fillRect(e_x, e_y, 25, 25);
+
             requestAnimationFrame(desenha);
             ultimoFrame = tempoAtual;
         }
