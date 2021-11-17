@@ -38,7 +38,8 @@
             ay: 0,
             cor: 'red',
             desenhar: desenharElemento,
-            mover: moverElemento
+            mover: moverElemento,
+            controlar: perseguirAlvo
         }
         let ultimoFrame, deltaFrames, deltaSegundos, framesPorSegundo;
 
@@ -53,8 +54,8 @@
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             // Controladores
-            e.ay = 0.5 * (p.y - e.y) - 0.2 * e.vy;
-            e.ax = 0.5 * (p.x - e.x) - 0.2 * e.vx;
+            // e.controlar({ x: 250, y: 120 });
+            e.controlar(p);
 
             // Atualiza dinâmica dos estados
             p.mover();
@@ -78,6 +79,16 @@
             this.vy += this.ay * deltaSegundos;
             this.x += this.vx * deltaSegundos;
             this.y += this.vy * deltaSegundos;
+        }
+
+        function perseguirAlvo(alvo) {
+            this.ay = 0.5 * (alvo.y - this.y) - 0.2 * this.vy;
+            this.ax = 0.5 * (alvo.x - this.x) - 0.2 * this.vx;
+        }
+
+        function evitarAlvo(alvo) {
+            this.ay = -0.5 * (alvo.y - this.y) - 0.2 * this.vy;
+            this.ax = -0.5 * (alvo.x - this.x) - 0.2 * this.vx;
         }
 
         addEventListener('keydown', teclaPressionada);
