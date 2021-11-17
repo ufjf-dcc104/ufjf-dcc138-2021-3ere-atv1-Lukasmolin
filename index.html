@@ -26,8 +26,15 @@
             vy: 0,
             ay: 0
         }
-        let e_x = 300, e_vx = 0, e_ax = 0, e_y = 250, e_vy = 0, e_ay = 0,
-            ultimoFrame, deltaFrames, deltaSegundos, framesPorSegundo;
+        const e = {
+            x: 300,
+            vx: 0,
+            ax: 0,
+            y: 250,
+            vy: 0,
+            ay: 0
+        }
+        let ultimoFrame, deltaFrames, deltaSegundos, framesPorSegundo;
 
         requestAnimationFrame(desenha);
         function desenha(tempoAtual) {
@@ -40,8 +47,8 @@
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             // Controladores
-            e_ay = 0.5 * (p.y - e_y) - 0.2 * e_vy;
-            e_ax = 0.5 * (p.x - e_x) - 0.2 * e_vx;
+            e.ay = 0.5 * (p.y - e.y) - 0.2 * e.vy;
+            e.ax = 0.5 * (p.x - e.x) - 0.2 * e.vx;
 
             // Atualiza dinâmica dos estados
             p.vx += p.ax * deltaSegundos;
@@ -49,25 +56,25 @@
             p.x += p.vx * deltaSegundos;
             p.y += p.vy * deltaSegundos;
 
-            e_vx += e_ax * deltaSegundos;
-            e_vy += e_ay * deltaSegundos;
-            e_x += e_vx * deltaSegundos;
-            e_y += e_vy * deltaSegundos;
+            e.vx += e.ax * deltaSegundos;
+            e.vy += e.ay * deltaSegundos;
+            e.x += e.vx * deltaSegundos;
+            e.y += e.vy * deltaSegundos;
 
             // Preenche elementos
             ctx.fillStyle = 'white';
             ctx.fillRect(p.x, p.y, 25, 25);
             ctx.fillStyle = 'red';
-            ctx.fillRect(e_x, e_y, 25, 25);
+            ctx.fillRect(e.x, e.y, 25, 25);
 
             requestAnimationFrame(desenha);
             ultimoFrame = tempoAtual;
         }
 
         addEventListener('keydown', teclaPressionada);
-        function teclaPressionada(ev) {
+        function teclaPressionada(event) {
             // Controle de velocidades
-            switch (ev.key) {
+            switch (event.key) {
                 case 'ArrowUp':
                     p.ay = - K;
                     break;
@@ -84,9 +91,9 @@
         }
 
         addEventListener('keyup', teclaSolta);
-        function teclaSolta(ev) {
+        function teclaSolta(event) {
             // Controle de velocidades
-            switch (ev.key) {
+            switch (event.key) {
                 case 'ArrowUp':
                 case 'ArrowDown':
                     p.vy = 0;
