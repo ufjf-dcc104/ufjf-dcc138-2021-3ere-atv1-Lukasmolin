@@ -24,7 +24,11 @@
             ax: 0,
             y: 100,
             vy: 0,
-            ay: 0
+            ay: 0,
+            desenhar: function () {
+                ctx.fillStyle = 'white';
+                ctx.fillRect(this.x, this.y, 25, 25);
+            }
         }
         const e = {
             x: 300,
@@ -32,7 +36,11 @@
             ax: 0,
             y: 250,
             vy: 0,
-            ay: 0
+            ay: 0,
+            desenhar: function () {
+                ctx.fillStyle = 'red';
+                ctx.fillRect(this.x, this.y, 25, 25);
+            }
         }
         let ultimoFrame, deltaFrames, deltaSegundos, framesPorSegundo;
 
@@ -62,10 +70,8 @@
             e.y += e.vy * deltaSegundos;
 
             // Preenche elementos
-            ctx.fillStyle = 'white';
-            ctx.fillRect(p.x, p.y, 25, 25);
-            ctx.fillStyle = 'red';
-            ctx.fillRect(e.x, e.y, 25, 25);
+            p.desenhar();
+            e.desenhar();
 
             requestAnimationFrame(desenha);
             ultimoFrame = tempoAtual;
@@ -96,12 +102,10 @@
             switch (event.key) {
                 case 'ArrowUp':
                 case 'ArrowDown':
-                    p.vy = 0;
                     p.ay = 0;
                     break;
                 case 'ArrowLeft':
                 case 'ArrowRight':
-                    p.vx = 0;
                     p.ax = 0;
                     break;
             }
