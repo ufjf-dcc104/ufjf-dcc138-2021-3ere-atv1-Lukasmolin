@@ -25,10 +25,9 @@
             y: 100,
             vy: 0,
             ay: 0,
-            desenhar: function () {
-                ctx.fillStyle = 'white';
-                ctx.fillRect(this.x, this.y, 25, 25);
-            }
+            cor: 'white',
+            desenhar: desenharElemento,
+            mover: moverElemento
         }
         const e = {
             x: 300,
@@ -37,10 +36,9 @@
             y: 250,
             vy: 0,
             ay: 0,
-            desenhar: function () {
-                ctx.fillStyle = 'red';
-                ctx.fillRect(this.x, this.y, 25, 25);
-            }
+            cor: 'red',
+            desenhar: desenharElemento,
+            mover: moverElemento
         }
         let ultimoFrame, deltaFrames, deltaSegundos, framesPorSegundo;
 
@@ -59,15 +57,8 @@
             e.ax = 0.5 * (p.x - e.x) - 0.2 * e.vx;
 
             // Atualiza dinâmica dos estados
-            p.vx += p.ax * deltaSegundos;
-            p.vy += p.ay * deltaSegundos;
-            p.x += p.vx * deltaSegundos;
-            p.y += p.vy * deltaSegundos;
-
-            e.vx += e.ax * deltaSegundos;
-            e.vy += e.ay * deltaSegundos;
-            e.x += e.vx * deltaSegundos;
-            e.y += e.vy * deltaSegundos;
+            p.mover();
+            e.mover();
 
             // Preenche elementos
             p.desenhar();
@@ -75,6 +66,18 @@
 
             requestAnimationFrame(desenha);
             ultimoFrame = tempoAtual;
+        }
+
+        function desenharElemento() {
+            ctx.fillStyle = this.cor;
+            ctx.fillRect(this.x, this.y, 25, 25);
+        }
+
+        function moverElemento() {
+            this.vx += this.ax * deltaSegundos;
+            this.vy += this.ay * deltaSegundos;
+            this.x += this.vx * deltaSegundos;
+            this.y += this.vy * deltaSegundos;
         }
 
         addEventListener('keydown', teclaPressionada);
