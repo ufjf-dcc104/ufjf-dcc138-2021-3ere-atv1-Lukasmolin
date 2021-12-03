@@ -29,18 +29,23 @@
             desenhar: desenharElemento,
             mover: moverElemento
         }
-        const e = {
-            x: 300,
-            vx: 0,
-            ax: 0,
-            y: 250,
-            vy: 0,
-            ay: 0,
-            cor: 'red',
-            desenhar: desenharElemento,
-            mover: moverElemento,
-            controlar: perseguirAlvo
+        const sprites = [];
+        for (let ne = 0; ne < 3; ne++) {
+            const e = {
+                x: canvas.width * Math.random(),
+                vx: 0,
+                ax: 0,
+                y: canvas.height * Math.random(),
+                vy: 0,
+                ay: 0,
+                cor: 'red',
+                desenhar: desenharElemento,
+                mover: moverElemento,
+                controlar: perseguirAlvo
+            }
+            sprites.push(e);
         }
+
         let ultimoFrame, deltaFrames, deltaSegundos, framesPorSegundo;
 
         requestAnimationFrame(desenha);
@@ -52,18 +57,18 @@
             // Preenche fundo
             ctx.fillStyle = 'black';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Controladores
-            // e.controlar({ x: 250, y: 120 });
-            e.controlar(p);
-
-            // Atualiza dinâmica dos estados
             p.mover();
-            e.mover();
-
-            // Preenche elementos
             p.desenhar();
-            e.desenhar();
+
+            sprites.forEach(sprite => {
+                // Controladores
+                // Sprite.controlar({ x: 250, y: 120 });
+                sprite.controlar(p);
+                // Atualiza dinâmica dos estados
+                sprite.mover();
+                // Desenha elementos
+                sprite.desenhar();
+            });
 
             requestAnimationFrame(desenha);
             ultimoFrame = tempoAtual;
