@@ -15,6 +15,7 @@
     <script>
         const canvas = document.querySelector('canvas');
         const ctx = canvas.getContext('2d');
+        let pontos = 0, ultimoFrame, deltaFrames, deltaSegundos, framesPorSegundo;
         canvas.width = 480;
         canvas.height = 320;
         const K = 1000;
@@ -65,7 +66,7 @@
         };
         sprites.push(o);
 
-        let ultimoFrame, deltaFrames, deltaSegundos, framesPorSegundo;
+
 
         requestAnimationFrame(desenha);
         function desenha(tempoAtual) {
@@ -87,7 +88,27 @@
                 sprite.mover?.();
                 // Desenha elementos
                 sprite.desenhar();
+
+                if (sprite !== o && colidiram(o, sprite)) {
+                    o.x = -1000;
+                    o.y = -1000;
+                    o.vx = 0;
+                    o.ax = 0;
+                    sprite.x = 1000;
+                    sprite.vx = 100;
+                    sprite.ax = 0;
+                    pontos++;
+                }
+                if (sprite !== o && colidiram(p, sprite)) {
+                    sprite.x = 1000;
+                    sprite.vx = 100;
+                    sprite.ax = 0;
+                    pontos -= 3;
+                }
             });
+            ctx.font = '20px Impact'
+            ctx.fillStyle = 'yellow';
+            ctx.fillText(pontos, 10, 30);
 
             requestAnimationFrame(desenha);
             ultimoFrame = tempoAtual;
@@ -155,6 +176,14 @@
                     }
                     break;
             }
+        }
+        function colidiram(A, B) {
+            return !(
+                (A.x > B.x + 20)
+                || (A.x + 20 < B.x)
+                || (A.y > B.y + 20)
+                || (A.y + 20 < B.y)
+            );
         }
     </script>
 </body>
